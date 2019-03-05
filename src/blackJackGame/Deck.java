@@ -20,11 +20,21 @@ public class Deck {
 
 	}
 
+	@Deprecated
 	public void printDeck() {
 		for (Card carte : cardsList) {
 			System.out.println(
 					carte.getCouleur() + " " + carte.getFace() + " " + carte.getValeur() + "\n****************\n");
 		}
+	}
+
+	@Override
+	public String toString() {
+		for (Card carte : cardsList) {
+			System.out.println(
+					carte.getCouleur() + " " + carte.getFace() + " " + carte.getValeur() + "\n****************\n");
+		}
+		return super.toString();
 	}
 
 }
