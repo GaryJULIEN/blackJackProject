@@ -24,6 +24,9 @@ public class Hand {
 		for (Card card : cardList) {
 			scoreHand += card.getValeur();
 		}
+		if (scoreHand > 21 && handGotAnAce()) {
+			scoreHand -= 10;
+		}
 		return scoreHand;
 	}
 
@@ -50,6 +53,16 @@ public class Hand {
 		}
 		System.out.println("La banque a " + getPointsHand() + " points en main");
 
+	}
+
+	public boolean handGotAnAce() {
+		boolean gotAnAce = false;
+		for (Card card : cardList) {
+			if (card.getValeur() == 11) {
+				gotAnAce = true;
+			}
+		}
+		return gotAnAce;
 	}
 
 	// getters et setters

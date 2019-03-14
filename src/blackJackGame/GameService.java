@@ -1,5 +1,7 @@
 package blackJackGame;
 
+import java.util.List;
+
 public class GameService {
 
 	private static final int VALUE_TO_STAY_FOR_BANK = 17;
@@ -48,6 +50,26 @@ public class GameService {
 		}
 	}
 
+	public boolean playerGotBlackJack() {
+
+		int nbCardsInPlayerHand = getnbCardsInHand(mainJoueur);
+		int playerHandValue = mainJoueur.getPointsHand();
+		boolean playerGotBJ = false;
+		if (nbCardsInPlayerHand == 2 && playerHandValue == 21) {
+			playerGotBJ = true;
+		}
+		return playerGotBJ;
+	}
+
+	public int getnbCardsInHand(Hand main) {
+		int nbCardsInPlayerHand = 0;
+		List<Card> playerCardsList = main.getCardList();
+		for (Card card : playerCardsList) {
+			nbCardsInPlayerHand++;
+		}
+		return nbCardsInPlayerHand;
+	}
+
 	public Hand getWinner() {
 		Hand winnerHand = null;
 		// si aucun joueur ne depasse 21
@@ -60,8 +82,10 @@ public class GameService {
 				winnerHand = mainBank;
 			}
 			// si egalité
-			else {
+			else if (mainBank.getPointsHand() == mainJoueur.getPointsHand()) {
 				winnerHand = null;
+			} else if (playerGotBlackJack()) {
+				winnerHand = mainJoueur;
 			}
 
 		}
