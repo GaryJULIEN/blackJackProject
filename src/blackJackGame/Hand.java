@@ -24,7 +24,7 @@ public class Hand {
 		for (Card card : cardList) {
 			scoreHand += card.getValeur();
 		}
-		if (scoreHand > 21 && handGotAnAce()) {
+		if ((scoreHand > 21) && handGotAnAce()) {
 			scoreHand -= 10;
 		}
 		return scoreHand;
@@ -36,23 +36,6 @@ public class Hand {
 			toMuch = true;
 		}
 		return toMuch;
-	}
-
-	public void printPlayerHand() {
-		System.out.println("Votre main contient : ");
-		for (Card card : cardList) {
-			System.out.println("   " + card.getFace() + " de " + card.getCouleur());
-		}
-		System.out.println("Vous avez " + getPointsHand() + " points en main");
-	}
-
-	public void printBankHand() {
-		System.out.println("La main de la banque contient : ");
-		for (Card card : cardList) {
-			System.out.println("   " + card.getFace() + " de " + card.getCouleur());
-		}
-		System.out.println("La banque a " + getPointsHand() + " points en main");
-
 	}
 
 	public boolean handGotAnAce() {

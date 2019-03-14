@@ -19,14 +19,17 @@ public class Launcher {
 		System.out.println(
 				"La banque a cette carte dans sa main : " + firstCard.getFace() + " de " + firstCard.getCouleur());
 		// 4-Afficher main joueur
-		nouvellePartie.getMainJoueur().printPlayerHand();
+		printPlayerHand(nouvellePartie.getMainJoueur());
 
 		// 5-Faire tirer joueur
 		boolean playerWantsToPlay = doesPlayerWantToPlay(scanner);
 		while (playerWantsToPlay) {
-			playerHitACArd(nouvellePartie);
+//			playerHitACArd(nouvellePartie);
+			nouvellePartie.playerHitACard();
+			printPlayerHand(nouvellePartie.getMainJoueur());
+
 			int playerHandValue = nouvellePartie.getMainJoueur().getPointsHand();
-			if (playerHandValue > nouvellePartie.getMaxScoreToWin()) {
+			if (playerHandValue > GameService.MAX_SCORE_TO_WIN) {
 				System.out.println("Vous avez dépassé la limite de points. Vous perdez ...");
 				playerWantsToPlay = false;
 			} else {
@@ -36,8 +39,11 @@ public class Launcher {
 		}
 		// 6-faire tirer bank
 		nouvellePartie.bankToPlay();
-		nouvellePartie.getMainBank().printBankHand();
+		printBankHand(nouvellePartie.getMainBank());
 		// 7-Determiner gagnant
+
+		// Player winnerPlayer = nouvellePartie.getWinnerPlayer();
+
 		Hand winnerHand = nouvellePartie.getWinner();
 		displayWinner(winnerHand, nouvellePartie);
 
@@ -69,11 +75,28 @@ public class Launcher {
 	}
 
 	public static void displayWinner(Hand winnerHand, GameService partie) {
-		if (winnerHand.equals(partie.getMainJoueur())) {
+		if (winnerHand == partie.getMainJoueur()) {
 			System.out.println("Vous remportez la partie");
 		} else {
 			System.out.println("La banque remporte la partie");
 		}
+	}
+
+	public static void printPlayerHand(Hand playerHand) {
+		System.out.println("Votre main contient : ");
+		for (Card card : playerHand.getCardList()) {
+			System.out.println("   " + card.getFace() + " de " + card.getCouleur());
+		}
+		System.out.println("Vous avez " + playerHand.getPointsHand() + " points en main");
+	}
+
+	public static void printBankHand(Hand bankHand) {
+		System.out.println("La main de la banque contient : ");
+		for (Card card : bankHand.getCardList()) {
+			System.out.println("   " + card.getFace() + " de " + card.getCouleur());
+		}
+		System.out.println("La banque a " + bankHand.getPointsHand() + " points en main");
+
 	}
 
 }

@@ -5,7 +5,7 @@ import java.util.List;
 public class GameService {
 
 	private static final int VALUE_TO_STAY_FOR_BANK = 17;
-	private static final int MAX_SCORE_TO_WIN = 21;
+	public static final int MAX_SCORE_TO_WIN = 21;
 
 	// constructeur
 	public GameService() {
@@ -37,7 +37,6 @@ public class GameService {
 	public void playerHitACard() {
 		Card cartePiochee = deck.removeCard();
 		mainJoueur.ajouterCarte(cartePiochee);
-		mainJoueur.printPlayerHand();
 
 	}
 
@@ -52,7 +51,7 @@ public class GameService {
 
 	public boolean playerGotBlackJack() {
 
-		int nbCardsInPlayerHand = getnbCardsInHand(mainJoueur);
+		int nbCardsInPlayerHand = getnbCardsInHand();
 		int playerHandValue = mainJoueur.getPointsHand();
 		boolean playerGotBJ = false;
 		if (nbCardsInPlayerHand == 2 && playerHandValue == 21) {
@@ -61,15 +60,16 @@ public class GameService {
 		return playerGotBJ;
 	}
 
-	public int getnbCardsInHand(Hand main) {
+	public int getnbCardsInHand() {
 		int nbCardsInPlayerHand = 0;
-		List<Card> playerCardsList = main.getCardList();
+		List<Card> playerCardsList = mainJoueur.getCardList();
 		for (Card card : playerCardsList) {
 			nbCardsInPlayerHand++;
 		}
 		return nbCardsInPlayerHand;
 	}
 
+	@Deprecated
 	public Hand getWinner() {
 		Hand winnerHand = null;
 		// si aucun joueur ne depasse 21
@@ -109,6 +109,12 @@ public class GameService {
 		return winnerHand;
 	}
 
+	public Player getWinnerPlayer() {
+		// TODO Auto-generated method stub
+		// return Player.Banker ;
+		return null;
+	}
+
 	// getters et setters
 	public Deck getDeck() {
 		return deck;
@@ -132,14 +138,6 @@ public class GameService {
 
 	public void setMainBank(Hand mainBank) {
 		this.mainBank = mainBank;
-	}
-
-	public int getValueToStayForBank() {
-		return VALUE_TO_STAY_FOR_BANK;
-	}
-
-	public int getMaxScoreToWin() {
-		return MAX_SCORE_TO_WIN;
 	}
 
 }
