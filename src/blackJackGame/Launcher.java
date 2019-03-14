@@ -24,7 +24,6 @@ public class Launcher {
 		// 5-Faire tirer joueur
 		boolean playerWantsToPlay = doesPlayerWantToPlay(scanner);
 		while (playerWantsToPlay) {
-//			playerHitACArd(nouvellePartie);
 			nouvellePartie.playerHitACard();
 			printPlayerHand(nouvellePartie.getMainJoueur());
 
@@ -40,12 +39,10 @@ public class Launcher {
 		// 6-faire tirer bank
 		nouvellePartie.bankToPlay();
 		printBankHand(nouvellePartie.getMainBank());
+
 		// 7-Determiner gagnant
-
-		// Player winnerPlayer = nouvellePartie.getWinnerPlayer();
-
-		Hand winnerHand = nouvellePartie.getWinner();
-		displayWinner(winnerHand, nouvellePartie);
+		Player winnerPlayer = nouvellePartie.getWinnerPlayer();
+		displayWinner(winnerPlayer);
 
 	}
 
@@ -74,11 +71,11 @@ public class Launcher {
 		return booleanChoice;
 	}
 
-	public static void displayWinner(Hand winnerHand, GameService partie) {
-		if (winnerHand == partie.getMainJoueur()) {
-			System.out.println("Vous remportez la partie");
-		} else {
-			System.out.println("La banque remporte la partie");
+	public static void displayWinner(Player winner) {
+		if (winner == Player.Banker) {
+			System.out.println("La banque gagne");
+		} else if (winner == Player.Human) {
+			System.out.println("Vous avez gagné");
 		}
 	}
 

@@ -110,9 +110,42 @@ public class GameService {
 	}
 
 	public Player getWinnerPlayer() {
-		// TODO Auto-generated method stub
-		// return Player.Banker ;
-		return null;
+		Player winner = null;
+		// si aucun joueur ne depasse 21
+		if (mainBank.getPointsHand() <= MAX_SCORE_TO_WIN && mainJoueur.getPointsHand() <= MAX_SCORE_TO_WIN) {
+			// si la banque est inferieure
+			if (mainBank.getPointsHand() < mainJoueur.getPointsHand()) {
+				winner = Player.Human;
+				// si la banque est superieure
+			} else if (mainBank.getPointsHand() > mainJoueur.getPointsHand()) {
+				winner = Player.Banker;
+			}
+			// si egalité
+			else if (mainBank.getPointsHand() == mainJoueur.getPointsHand()) {
+				winner = null;
+			} else if (playerGotBlackJack()) {
+				winner = Player.Human;
+			}
+
+		}
+		// si la banque depasse 21
+		else if (mainBank.getPointsHand() > MAX_SCORE_TO_WIN) {
+			// si le joueur n'a pas depassé 21
+			if (mainJoueur.getPointsHand() <= MAX_SCORE_TO_WIN) {
+				winner = Player.Human;
+			}
+			// si le joueur dépasse 21
+			else {
+				winner = Player.Banker;
+			}
+
+		}
+		// si le joueur depasse 21
+		else if (mainJoueur.getPointsHand() > MAX_SCORE_TO_WIN) {
+			winner = Player.Banker;
+		}
+
+		return winner;
 	}
 
 	// getters et setters
