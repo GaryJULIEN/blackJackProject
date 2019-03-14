@@ -13,12 +13,14 @@ public class GameService {
 		deck = new Deck();
 		mainBank = new Hand();
 		mainJoueur = new Hand();
+		defausse = new StraightenDeck();
 	}
 
 	// attributs
-	private Deck deck;
-	private Hand mainJoueur;
-	private Hand mainBank;
+	private static Deck deck;
+	private static Hand mainJoueur;
+	private static Hand mainBank;
+	private static StraightenDeck defausse;
 
 	// methodes
 	public void initializeFirstHands() {
@@ -148,6 +150,21 @@ public class GameService {
 		return winner;
 	}
 
+	public static void putHandsInStreinghtenDesk() {
+		int nbCardsInPlayerHand = mainJoueur.nbCardsInHand();
+		for (int i = 0; i < nbCardsInPlayerHand; i++) {
+			Card removedCard = mainJoueur.getCardList().remove(0);
+			defausse.getCardsList().add(removedCard);
+		}
+
+		int nbCardsInBankHand = mainBank.nbCardsInHand();
+		for (int i = 0; i < nbCardsInBankHand; i++) {
+			Card removedCard = mainBank.getCardList().remove(0);
+			defausse.getCardsList().add(removedCard);
+		}
+
+	}
+
 	// getters et setters
 	public Deck getDeck() {
 		return deck;
@@ -171,6 +188,14 @@ public class GameService {
 
 	public void setMainBank(Hand mainBank) {
 		this.mainBank = mainBank;
+	}
+
+	public StraightenDeck getDefausse() {
+		return defausse;
+	}
+
+	public void setDefausse(StraightenDeck defausse) {
+		this.defausse = defausse;
 	}
 
 }

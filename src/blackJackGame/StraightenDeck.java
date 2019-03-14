@@ -12,4 +12,12 @@ public class StraightenDeck {
 		cardsList = new LinkedList<>();
 	}
 
+	public List<Card> getCardsList() {
+		return cardsList;
+	}
+
+	public void setCardsList(List<Card> cardsList) {
+		this.cardsList = cardsList;
+	}
+
 }

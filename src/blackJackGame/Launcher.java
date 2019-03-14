@@ -12,16 +12,28 @@ public class Launcher {
 		Scanner scanner = new Scanner(System.in);
 		// 1-Initialiser la partie (un deck, une main joueur vide et une main bank vide)
 		GameService nouvellePartie = new GameService();
-		// 2-Distribuer les cartes aux joueurs
+
+		// 2-Commencer la partie
+		startToPlay(nouvellePartie, scanner);
+
+	}
+
+	public static void playAgain(GameService nouvellePartie, Scanner scanner) {
+		GameService.putHandsInStreinghtenDesk();
+		startToPlay(nouvellePartie, scanner);
+	}
+
+	public static void startToPlay(GameService nouvellePartie, Scanner scanner) {
+		// 1-Distribuer les cartes aux joueurs
 		nouvellePartie.initializeFirstHands();
-		// 3-Afficher main bank
+		// 2-Afficher main bank
 		Card firstCard = nouvellePartie.getMainBank().getCardList().get(0);
 		System.out.println(
 				"La banque a cette carte dans sa main : " + firstCard.getFace() + " de " + firstCard.getCouleur());
-		// 4-Afficher main joueur
+		// 3-Afficher main joueur
 		printPlayerHand(nouvellePartie.getMainJoueur());
 
-		// 5-Faire tirer joueur
+		// 4-Faire tirer joueur
 		boolean playerWantsToPlay = doesPlayerWantToPlay(scanner);
 		while (playerWantsToPlay) {
 			nouvellePartie.playerHitACard();
@@ -36,14 +48,32 @@ public class Launcher {
 			}
 
 		}
-		// 6-faire tirer bank
+		// 5-faire tirer bank
 		nouvellePartie.bankToPlay();
 		printBankHand(nouvellePartie.getMainBank());
 
-		// 7-Determiner gagnant
+		// 6-Determiner gagnant
 		Player winnerPlayer = nouvellePartie.getWinnerPlayer();
 		displayWinner(winnerPlayer);
 
+		// 7-Proposer de rejouer
+		System.out.println("\n***FIN DE JEU***\nVoulez-vous rejouer ?\n   OUI : 1\n   NON : 0");
+		boolean playerWantsToPlayAgain = doesPlayerWantToPlayAgain(scanner);
+		if (playerWantsToPlayAgain) {
+			playAgain(nouvellePartie, scanner);
+		} else {
+			System.out.println("Merci d'avoir joué ! A bientôt");
+		}
+
+	}
+
+	public static boolean doesPlayerWantToPlayAgain(Scanner scanner) {
+		boolean playAgain = false;
+		int playerChoice = scanner.nextInt();
+		if (playerChoice == 1) {
+			playAgain = true;
+		}
+		return playAgain;
 	}
 
 	public static void playerHitACArd(GameService partie) {

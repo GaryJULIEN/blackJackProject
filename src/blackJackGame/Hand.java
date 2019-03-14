@@ -24,9 +24,14 @@ public class Hand {
 		for (Card card : cardList) {
 			scoreHand += card.getValeur();
 		}
-		if ((scoreHand > 21) && handGotAnAce()) {
-			scoreHand -= 10;
+		int nbAces = nbAcesInHand();
+		if (nbAces > 0 && scoreHand > VALUE_MAX_TO_WIN) {
+			while ((scoreHand > VALUE_MAX_TO_WIN) || nbAces == 0) {
+				scoreHand -= 10;
+				nbAces--;
+			}
 		}
+
 		return scoreHand;
 	}
 
@@ -38,14 +43,22 @@ public class Hand {
 		return toMuch;
 	}
 
-	public boolean handGotAnAce() {
-		boolean gotAnAce = false;
+	public int nbAcesInHand() {
+		int nbAces = 0;
 		for (Card card : cardList) {
 			if (card.getValeur() == 11) {
-				gotAnAce = true;
+				nbAces++;
 			}
 		}
-		return gotAnAce;
+		return nbAces;
+	}
+
+	public int nbCardsInHand() {
+		int nbCardsInHand = 0;
+		for (Card card : cardList) {
+			nbCardsInHand++;
+		}
+		return nbCardsInHand;
 	}
 
 	// getters et setters
