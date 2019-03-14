@@ -7,11 +7,11 @@ public class Card {
 	private int valeur;
 
 	// Constructeurs
-	public Card(Color couleur, Face face, int valeur) {
+	public Card(Color couleur, Face face) {
 		super();
 		this.couleur = couleur;
 		this.face = face;
-		this.valeur = valeur;
+		valeur = face.getValeur();
 	}
 
 	// Getters setters
